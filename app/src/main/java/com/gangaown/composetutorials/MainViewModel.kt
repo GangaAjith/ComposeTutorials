@@ -1,17 +1,12 @@
 package com.gangaown.composetutorials
 
-import androidx.lifecycle.LiveData
+import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 
 class MainViewModel: ViewModel() {
+    var hobbies = mutableStateListOf("Swimming","Reading","Cycling","Photography")
 
-    private var _mutableHobbiesList = mutableListOf("Swimming","Reading","Cycling","Travelling","Photography")
-    val hobbiesList = _mutableHobbiesList
-
-
-    /*fun addHobbies(){
-        val newList = mutableListOf("Swimming","Reading","Cycling","Travelling","Photography", "Cooking")
-        _mutableHobbiesList.add("Cooking")
-
-    }*/
+    fun addHobbies(){
+        hobbies.add("Travelling")
+    }
 }

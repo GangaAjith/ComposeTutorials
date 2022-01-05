@@ -9,7 +9,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -43,6 +42,7 @@ class MainActivity : AppCompatActivity() {
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold
                 )
+
                 val firstNameState = remember { mutableStateOf(TextFieldValue()) }
                 OutlinedTextField(
                     value = firstNameState.value,
@@ -68,31 +68,30 @@ class MainActivity : AppCompatActivity() {
                     text = "Hobbies",
                     modifier = Modifier.padding(bottom = 10.dp),
                     style = MaterialTheme.typography.h5,
-
                 )
-                val hobbiesState = viewModel.hobbiesList
+
+                val hobbiesList = remember  {viewModel.hobbies}
                 LazyColumn(
-                    modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth(),
                     ) {
-                    itemsIndexed(hobbiesState) { i, item ->
-                        Text(
-                            text = "${i + 1}.${item}",
-                            fontSize = 20.sp,
-                            color = Color.Black
-                        )
-                        Divider()
+                        itemsIndexed(hobbiesList) { i, item ->
+                            Text(
+                                text = "${i + 1}.${item}",
+                                fontSize = 20.sp,
+                                color = Color.Black
+                            )
+                            Divider()
+                        }
                     }
-
-                }
             }
-
 
             FloatingActionButton(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
                     .padding(12.dp),
                 onClick = {
-                    Toast.makeText(baseContext,"You clicked me!", Toast.LENGTH_SHORT).show()
+                    viewModel.addHobbies()
+                    Toast.makeText(baseContext,"Hobby added successfully!", Toast.LENGTH_SHORT).show()
                 }
             ) {
                 Text("+")
